@@ -13,12 +13,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LeafletMapComponent } from './location/leaflet-map/leaflet-map.component';
 import { LocationComponent } from './location/location.component';
+import { WantlistComponent } from './wantlist/wantlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeafletMapComponent,
-    LocationComponent
+    LocationComponent,
+    WantlistComponent
   ],
   imports: [
     BrowserModule,
