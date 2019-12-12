@@ -16,10 +16,11 @@
 
     <div>
       <label>Radius to search (km):</label>
-      <mat-slider thumbLabel min="1" max="10" step="1" value="3"></mat-slider>
+      <mat-slider thumbLabel min="1000" max="10000" step="1000" [displayWith]="metersToKm" [(ngModel)]="mapRadius">
+      </mat-slider>
     </div>
 
-    <app-leaflet-map></app-leaflet-map>
+    <app-leaflet-map [radius]="mapRadius"></app-leaflet-map>
 
   </mat-expansion-panel>
 

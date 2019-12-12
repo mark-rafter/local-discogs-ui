@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Map, Circle, TileLayer, LeafletMouseEvent } from 'leaflet';
 
 @Component({
@@ -6,15 +6,23 @@ import { Map, Circle, TileLayer, LeafletMouseEvent } from 'leaflet';
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.scss']
 })
-export class LeafletMapComponent implements AfterViewInit {
+export class LeafletMapComponent implements AfterViewInit, OnChanges {
   private map: Map;
   private circle: Circle;
 
+  @Input() radius: number;
+
   constructor() { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.initMap();
     this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.circle) {
+      this.circle.setRadius(this.radius);
+    }
   }
 
   public onMapClick(e: LeafletMouseEvent): void {
@@ -22,10 +30,10 @@ export class LeafletMapComponent implements AfterViewInit {
       this.circle.setLatLng(e.latlng);
     } else {
       this.circle = new Circle(e.latlng, {
-        color: 'red',
-        fillColor: '#30f',
-        fillOpacity: 0.4,
-        radius: 3000
+        color: 'blue',
+        fillColor: '#20f',
+        fillOpacity: 0.2,
+        radius: this.radius
       }).addTo(this.map);
     }
   }

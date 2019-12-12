@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'local-discogs-ui';
+
+  mapRadius: number = 3000;
+
+  metersToKm = (value: number) => value / 1000;
 }
