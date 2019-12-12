@@ -11,7 +11,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
+import { LeafletMapComponent } from './location/leaflet-map/leaflet-map.component';
 import { LocationComponent } from './location/location.component';
 
 @NgModule({

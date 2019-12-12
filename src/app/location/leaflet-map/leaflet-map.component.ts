@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Map, Circle, TileLayer, LeafletMouseEvent, LatLng } from 'leaflet';
-import { OptionsService } from '../services/options.service';
+import { OptionsService } from '../../services/options.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,15 +30,15 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
     this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
 
     this.subscription.add(
-      this.optionsService.getRadius().subscribe(obs => {
-        this.radius = obs;
+      this.optionsService.getRadius().subscribe((radius: number) => {
+        this.radius = radius;
         this.updateCircleRadius();
       })
     );
 
     this.subscription.add(
-      this.optionsService.getLocation().subscribe(obs => {
-        this.location = obs;
+      this.optionsService.getLocation().subscribe((location: LatLng) => {
+        this.location = location;
         this.updateCircleLocation();
       })
     );
