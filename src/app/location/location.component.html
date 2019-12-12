@@ -1,0 +1,21 @@
+<mat-expansion-panel id="locationPanel" expanded="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Choose Location
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div>
+        <button mat-raised-button color="primary">Use Current Location</button>
+    </div>
+
+    <div>
+        <label>Radius to search (km):</label>
+        <mat-slider thumbLabel min="1000" max="10000" step="1000" [displayWith]="metersToKm" [ngModel]="radius$ | async"
+            (ngModelChange)="updateRadius($event)">
+        </mat-slider>
+    </div>
+
+    <app-leaflet-map></app-leaflet-map>
+
+</mat-expansion-panel>

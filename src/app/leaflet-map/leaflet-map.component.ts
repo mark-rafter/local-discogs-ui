@@ -1,27 +1,41 @@
-import { Component, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Map, Circle, TileLayer, LeafletMouseEvent } from 'leaflet';
+import { OptionsService } from '../services/options.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-leaflet-map',
-  templateUrl: './leaflet-map.component.html',
+  template: `
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>`,
   styleUrls: ['./leaflet-map.component.scss']
 })
-export class LeafletMapComponent implements AfterViewInit, OnChanges {
+export class LeafletMapComponent implements AfterViewInit {
   private map: Map;
   private circle: Circle;
 
-  @Input() radius: number;
+  private radius: number;
 
-  constructor() { }
+  private subscription = new Subscription();
+
+  constructor(private optionsService: OptionsService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
     this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
+
+    this.subscription.add(this.optionsService.getRadius().subscribe(obs => {
+      this.radius = obs;
+      this.updateCircle(this.radius);
+    }));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  private updateCircle(value: number) {
     if (this.circle) {
-      this.circle.setRadius(this.radius);
+      this.circle.setRadius(value);
     }
   }
 
