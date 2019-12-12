@@ -14,12 +14,12 @@
       <button mat-raised-button color="primary">Use Current Location</button>
     </div>
 
-    <p>TODO: map goes here</p>
-
     <div>
-      <label>Radius to search (miles):</label>
+      <label>Radius to search (km):</label>
       <mat-slider thumbLabel min="1" max="10" step="1" value="3"></mat-slider>
     </div>
+
+    <app-leaflet-map></app-leaflet-map>
 
   </mat-expansion-panel>
 
