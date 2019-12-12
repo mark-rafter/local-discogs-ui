@@ -1,5 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { Map, Circle, TileLayer, LeafletMouseEvent } from 'leaflet';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Map, Circle, TileLayer, LeafletMouseEvent, LatLng } from 'leaflet';
 import { OptionsService } from '../services/options.service';
 import { Subscription } from 'rxjs';
 
@@ -13,11 +13,13 @@ import { Subscription } from 'rxjs';
   </div>`,
   styleUrls: ['./leaflet-map.component.scss']
 })
-export class LeafletMapComponent implements AfterViewInit {
+export class LeafletMapComponent implements AfterViewInit, OnDestroy {
+
   private map: Map;
   private circle: Circle;
 
   private radius: number;
+  private location: LatLng;
 
   private subscription = new Subscription();
 
@@ -27,34 +29,53 @@ export class LeafletMapComponent implements AfterViewInit {
     this.initMap();
     this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
 
-    this.subscription.add(this.optionsService.getRadius().subscribe(obs => {
-      this.radius = obs;
-      this.updateCircle(this.radius);
-    }));
+    this.subscription.add(
+      this.optionsService.getRadius().subscribe(obs => {
+        this.radius = obs;
+        this.updateCircleRadius();
+      })
+    );
+
+    this.subscription.add(
+      this.optionsService.getLocation().subscribe(obs => {
+        this.location = obs;
+        this.updateCircleLocation();
+      })
+    );
   }
 
-  private updateCircle(value: number) {
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private updateCircleRadius(): void {
     if (this.circle) {
-      this.circle.setRadius(value);
+      this.circle.setRadius(this.radius);
     }
   }
 
-  public onMapClick(e: LeafletMouseEvent): void {
+  private updateCircleLocation(): void {
     if (this.circle) {
-      this.circle.setLatLng(e.latlng);
+      this.circle.setLatLng(this.location);
     } else {
-      this.circle = new Circle(e.latlng, {
+      this.circle = new Circle(this.location, {
         color: 'blue',
         fillColor: '#20f',
         fillOpacity: 0.2,
         radius: this.radius
       }).addTo(this.map);
     }
+
+    // this.map.panTo([this.location.lat, this.location.lng]); // bugged in firefox
+  }
+
+  public onMapClick(e: LeafletMouseEvent): void {
+    this.optionsService.setLocation(e.latlng);
   }
 
   private initMap(): void {
     this.map = new Map('map', {
-      center: [52.00, -1.00], // UK
+      center: [52.0, -1.0], // UK
       zoom: 4
     });
 
