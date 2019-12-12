@@ -16,7 +16,7 @@ export class WantlistComponent implements OnInit {
     this.username$ = this.optionsService.getWantlistUsername();
   }
 
-  updateRadius(value: string) {
+  updateUsername(value: string) {
     this.optionsService.setWantlistUsername(value);
   }
 

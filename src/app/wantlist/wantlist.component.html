@@ -5,11 +5,10 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <form>
-        <mat-form-field>
-            <input matInput placeholder="Discogs username" value="">
-        </mat-form-field>
-        <mat-slide-toggle>Push notifications</mat-slide-toggle>
-    </form>
+    <mat-form-field>
+        <input matInput placeholder="Discogs username" [ngModel]="username$ | async"
+            (ngModelChange)="updateUsername($event)">
+    </mat-form-field>
+    <mat-slide-toggle disabled="true">Push notifications</mat-slide-toggle>
 
 </mat-expansion-panel>
