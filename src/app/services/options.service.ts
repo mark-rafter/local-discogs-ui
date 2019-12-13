@@ -35,7 +35,7 @@ export class OptionsService {
 
   public setStoredValues(): void {
     if (this.localStorageAvailable) {
-      let options: Options = new Options();
+      const options: Options = new Options();
 
       this.mapRadius.pipe(take(1)).subscribe(obs => options.mapRadius = obs);
       this.mapLocation.pipe(take(1)).subscribe(obs => options.mapLocation = obs);

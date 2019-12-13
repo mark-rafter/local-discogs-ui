@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class LeafletMapComponent implements AfterViewInit, OnDestroy {
 
   private map: Map;
-  private mapInited: boolean = false;
+  private mapInited = false;
   private circle: Circle;
 
   private radius: number;
