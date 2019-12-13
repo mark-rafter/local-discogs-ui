@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class LeafletMapComponent implements AfterViewInit, OnDestroy {
 
   private map: Map;
+  private mapInited: boolean = false;
   private circle: Circle;
 
   private radius: number;
@@ -27,7 +28,6 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
 
     this.subscription.add(
       this.optionsService.getRadius().subscribe((radius: number) => {
@@ -39,7 +39,9 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
     this.subscription.add(
       this.optionsService.getLocation().subscribe((location: LatLng) => {
         this.location = location;
-        this.updateCircleLocation();
+        if (this.location) {
+          this.updateCircleLocation();
+        }
       })
     );
   }
@@ -57,7 +59,7 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
   private updateCircleLocation(): void {
     if (this.circle) {
       this.circle.setLatLng(this.location);
-    } else {
+    } else if (this.mapInited) {
       this.circle = new Circle(this.location, {
         color: 'blue',
         fillColor: '#20f',
@@ -66,7 +68,7 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
       }).addTo(this.map);
     }
 
-    // this.map.panTo([this.location.lat, this.location.lng]); // bugged in firefox
+    // this.map.panTo([this.location.lat, this.location.lng]); // bugged in firefox?
   }
 
   public onMapClick(e: LeafletMouseEvent): void {
@@ -85,6 +87,10 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
     });
 
     tiles.addTo(this.map);
+
+    this.map.on('click', (e: LeafletMouseEvent) => this.onMapClick(e));
+
+    this.mapInited = true;
   }
 
 }

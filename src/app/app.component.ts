@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OptionsService } from './services/options.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'local-discogs-ui';
+
+  constructor(private optionsService: OptionsService) { }
+
+  onSearch() {
+    this.optionsService.setStoredValues();
+  }
 }
