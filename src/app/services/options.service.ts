@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LatLng } from 'leaflet';
 import { LOCAL_STORAGE, StorageService, isStorageAvailable } from 'ngx-webstorage-service';
@@ -36,6 +36,18 @@ export class OptionsService {
   public setStoredValues(): void {
     if (this.localStorageAvailable) {
       const options: Options = new Options();
+
+      // todo: test
+      // const options$ = zip(this.mapRadius, this.mapLocation, this.wantlistUsername)
+      //   .pipe(
+      //     map(
+      //       ([mapRadius, mapLocation, wantlistUsername]) => {
+      //         const op: Options = { mapRadius, mapLocation, wantlistUsername };
+      //         return op;
+      //       }
+      //     ));
+
+      // options$.subscribe(o => this.storage.set('options', o));
 
       this.mapRadius.pipe(take(1)).subscribe(obs => options.mapRadius = obs);
       this.mapLocation.pipe(take(1)).subscribe(obs => options.mapLocation = obs);

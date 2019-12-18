@@ -16,8 +16,14 @@ export class WantlistComponent implements OnInit {
     this.username$ = this.optionsService.getWantlistUsername();
   }
 
-  updateUsername(value: string) {
+  updateUsername(value: string): void {
     this.optionsService.setWantlistUsername(value);
+  }
+
+  onFetch(): void {
+    // todo: call API. return:
+    // {username} does not exist / wantlist is set to private
+    // {username}'s wantlist contains {count} items. Last updated: {datetime}
   }
 
 }
