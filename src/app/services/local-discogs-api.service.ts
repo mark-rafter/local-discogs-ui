@@ -15,16 +15,15 @@ export class LocalDiscogsApiService {
 
   getStoresByLocation(lat: number, lng: number, radius: number): Observable<StoreResponse[]> {
     return this.http.get<StoreResponse[]>(
-      environment.apiUrl + `store/by-location?lat=${lat}&lng=${lng}&radius=${radius}`, {}).pipe(
+      environment.apiUrl + `store/by-location?lat=${lat}&lng=${lng}&radius=${radius}`)
+      .pipe(
         retry(1),
         catchError(err => throwError(this.errorHandling(err)))
       );
   }
 
-  protected errorHandling(error: any) {
-    this.toastr.error(`${error.message} - ${error.error ? error.error.message : error.message}`, `Error - ${error.statusText}`, {
-      timeOut: 15000
-    });
+  private errorHandling(error: any) {
+    this.toastr.error(`${error.message} - ${error.error ? error.error.message : error.message}`, `Error - ${error.statusText}`);
     if (error instanceof HttpErrorResponse) {
       console.error('An error occurred:', error.message);
     } else {

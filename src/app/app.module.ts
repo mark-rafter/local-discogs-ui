@@ -28,7 +28,10 @@ import { WantlistComponent } from './wantlist/wantlist.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      closeButton: true
+    }),
     HttpClientModule,
     FormsModule,
     MatToolbarModule,

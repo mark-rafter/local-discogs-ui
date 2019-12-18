@@ -1,5 +1,5 @@
 export interface StoreResponse {
-    sellerName: string;
+    sellername: string;
     address: string;
     // todo: location
 }
