@@ -13,6 +13,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
 
 import { LeafletMapComponent } from './location/leaflet-map/leaflet-map.component';
 import { LocationComponent } from './location/location.component';
@@ -41,7 +42,8 @@ import { SearchComponent } from './search/search.component';
     MatSliderModule,
     MatButtonModule,
     MatInputModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressButtonsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,7 +13,7 @@
             </mat-form-field>
         </div>
         <div>
-            <button mat-raised-button color="primary" (click)="onFetch()">Fetch</button>
+            <mat-spinner-button (btnClick)="onFetch()" [options]="fetchBtnOptions"></mat-spinner-button>
         </div>
     </div>
     <div class="pt-20">

@@ -1,5 +1,9 @@
 <div class="container p-20">
     <div>
-        <button mat-raised-button color="primary" class="searchBtn" (click)="onSearch()">Search local stores</button>
+        <mat-spinner-button (btnClick)="onSearch()" [options]="searchBtnOptions"></mat-spinner-button>
+        <button mat-raised-button color="primary" (click)="onSearch()"></button>
+    </div>
+    <div>
+        <!-- todo: found X shops -->
     </div>
 </div>
