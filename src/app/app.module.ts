@@ -19,6 +19,9 @@ import { LeafletMapComponent } from './location/leaflet-map/leaflet-map.componen
 import { LocationComponent } from './location/location.component';
 import { WantlistComponent } from './wantlist/wantlist.component';
 import { SearchComponent } from './search/search.component';
+import { StoreComponent } from './search/store/store.component';
+import { ListingComponent } from './search/store/listing/listing.component';
+import { MatProgressSpinnerModule, MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { SearchComponent } from './search/search.component';
     LeafletMapComponent,
     LocationComponent,
     WantlistComponent,
-    SearchComponent
+    SearchComponent,
+    StoreComponent,
+    ListingComponent
   ],
   imports: [
     BrowserModule,
@@ -37,12 +42,14 @@ import { SearchComponent } from './search/search.component';
     }),
     HttpClientModule,
     FormsModule,
+    MatTableModule,
     MatToolbarModule,
     MatExpansionModule,
     MatSliderModule,
     MatButtonModule,
     MatInputModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
     MatProgressButtonsModule.forRoot()
   ],
   providers: [],

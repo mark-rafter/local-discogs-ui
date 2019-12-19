@@ -1,0 +1,32 @@
+<mat-expansion-panel expanded="false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>{{store.sellername}}</mat-panel-title>
+        <mat-panel-description>
+            <div *ngIf="(sellerInventory$ | async) as sellerInventory; else loading">
+                {{sellerInventory.inventory?.length}} listings
+            </div>
+            <ng-template #loading>
+                <mat-spinner diameter="20" stroke-width="15"></mat-spinner>
+            </ng-template>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="(sellerInventory$ | async) as sellerInventory">
+        <table mat-table [dataSource]="sellerInventory.inventory">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id </th>
+                <td mat-cell *matCellDef="let listing"> <a
+                        href="https://www.discogs.com/sell/item/{{listing.id}}">{{listing.id}}</a> </td>
+            </ng-container>
+            <mat-text-column name="description"></mat-text-column>
+            <mat-text-column name="condition"></mat-text-column>
+            <mat-text-column name="sleeveCondition"></mat-text-column>
+            <mat-text-column name="posted"></mat-text-column>
+            <mat-text-column name="price"></mat-text-column>
+            <tr mat-header-row *matHeaderRowDef="listingColumns"></tr>
+            <tr mat-row *matRowDef="let listing; columns: listingColumns"></tr>
+        </table>
+        <!-- <app-listing *ngFor="let listing of sellerInventory.inventory" [listing]="listing"></app-listing> -->
+    </div>
+
+</mat-expansion-panel>
