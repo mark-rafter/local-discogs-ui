@@ -17,13 +17,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LeafletMapComponent } from './location/leaflet-map/leaflet-map.component';
 import { LocationComponent } from './location/location.component';
 import { WantlistComponent } from './wantlist/wantlist.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeafletMapComponent,
     LocationComponent,
-    WantlistComponent
+    WantlistComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

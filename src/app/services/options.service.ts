@@ -40,6 +40,7 @@ export class OptionsService {
       // todo: test
       // const options$ = zip(this.mapRadius, this.mapLocation, this.wantlistUsername)
       //   .pipe(
+      //     take(1),
       //     map(
       //       ([mapRadius, mapLocation, wantlistUsername]) => {
       //         const op: Options = { mapRadius, mapLocation, wantlistUsername };

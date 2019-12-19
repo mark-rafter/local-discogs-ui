@@ -5,11 +5,19 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-form-field>
-        <input matInput placeholder="Discogs username" [ngModel]="username$ | async"
-            (ngModelChange)="updateUsername($event)">
-        <button mat-raised-button color="primary" (click)="onFetch()">Fetch</button>
-    </mat-form-field>
-    <mat-slide-toggle disabled="true">Push notifications</mat-slide-toggle>
+    <div class="container-r">
+        <div class="pr-20">
+            <mat-form-field>
+                <input matInput placeholder="Discogs username" [ngModel]="username$ | async"
+                    (ngModelChange)="updateUsername($event)">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="onFetch()">Fetch</button>
+        </div>
+    </div>
+    <div class="pt-20">
+        <mat-slide-toggle disabled="true">Push notifications</mat-slide-toggle>
+    </div>
 
 </mat-expansion-panel>
