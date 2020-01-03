@@ -5,7 +5,7 @@
     <div *ngIf="(stores$ | async) as stores">
         <p *ngIf="stores.length > 3">Found {{stores.length}} stores nearby</p>
 
-        <app-store *ngFor="let store of stores" [store]="store">
+        <app-store *ngFor="let store of stores" [store]="store" [wantlistUsername]="wantlistUsername">
         </app-store>
     </div>
 </div>

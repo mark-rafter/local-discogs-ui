@@ -26,6 +26,8 @@ export class SearchComponent {
 
   stores$: Observable<StoreResponse[]>;
 
+  wantlistUsername: string;
+
   constructor(private optionsService: OptionsService, private apiService: LocalDiscogsApiService, private toastr: ToastrService) { }
 
   onSearch(): void {
@@ -33,16 +35,20 @@ export class SearchComponent {
 
     this.optionsService.setStoredValues();
 
-    this.stores$ = zip(this.optionsService.getRadius(), this.optionsService.getLocation())
+    this.stores$ = zip(this.optionsService.getRadius(), this.optionsService.getLocation(), this.optionsService.getWantlistUsername())
       .pipe(
         finalize(() => this.searchBtnOptions.active = false),
         take(1),
         switchMap(
-          ([mapRadius, mapLocation]) => {
+          ([mapRadius, mapLocation, wantlistUsername]) => {
             if (!mapLocation) {
               this.toastr.warning('Please select a location on the map');
               return EMPTY;
+            } else if (!wantlistUsername) {
+              this.toastr.warning('Please enter a wantlist username');
+              return EMPTY;
             } else {
+              this.wantlistUsername = wantlistUsername;
               return this.apiService.getStoresByLocation(mapLocation.lat, mapLocation.lng, mapRadius);
             }
           }

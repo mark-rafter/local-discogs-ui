@@ -21,7 +21,7 @@ import { WantlistComponent } from './wantlist/wantlist.component';
 import { SearchComponent } from './search/search.component';
 import { StoreComponent } from './search/store/store.component';
 import { ListingComponent } from './search/store/listing/listing.component';
-import { MatProgressSpinnerModule, MatTableModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatTableModule, MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { MatProgressSpinnerModule, MatTableModule } from '@angular/material';
     HttpClientModule,
     FormsModule,
     MatTableModule,
+    MatPaginatorModule,
     MatToolbarModule,
     MatExpansionModule,
     MatSliderModule,

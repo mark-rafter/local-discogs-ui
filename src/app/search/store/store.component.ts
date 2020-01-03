@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { StoreResponse } from 'src/app/models/storeResponse';
 import { LocalDiscogsApiService } from 'src/app/services/local-discogs-api.service';
 import { Observable } from 'rxjs';
-import { SellerInventory } from 'src/app/models/sellerInventory';
+import { FilteredInventoryResponse } from 'src/app/models/filteredInventoryResponse';
 
 @Component({
   selector: 'app-store',
@@ -11,15 +11,16 @@ import { SellerInventory } from 'src/app/models/sellerInventory';
 })
 export class StoreComponent implements OnInit {
   @Input() store: StoreResponse;
+  @Input() wantlistUsername: string;
 
-  sellerInventory$: Observable<SellerInventory>;
+  inventoryResponse$: Observable<FilteredInventoryResponse>;
 
   listingColumns = ['id', 'description', 'condition', 'sleeveCondition', 'posted', 'price'];
 
   constructor(private apiService: LocalDiscogsApiService) { }
 
   ngOnInit() {
-    this.sellerInventory$ = this.apiService.getInventory(this.store.sellername);
+    this.inventoryResponse$ = this.apiService.getFilteredInventory(this.store.sellername, this.wantlistUsername);
   }
 
 }

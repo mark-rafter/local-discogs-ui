@@ -1,12 +1,9 @@
 .container-r {
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
 }
 
 .pr-20 {
   padding-right: 20px;
-}
-
-.pt-20 {
-  padding-top: 20px;
 }
