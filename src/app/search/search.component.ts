@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { OptionsService } from '../services/options.service';
 import { LocalDiscogsApiService } from '../services/local-discogs-api.service';
 import { StoreResponse } from '../models/storeResponse';
-import { zip, EMPTY } from 'rxjs';
+import { zip, EMPTY, Observable } from 'rxjs';
 import { switchMap, take, finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
@@ -24,6 +24,10 @@ export class SearchComponent {
     value: 0
   };
 
+  stores$: Observable<StoreResponse[]>;
+
+  wantlistUsername: string;
+
   constructor(private optionsService: OptionsService, private apiService: LocalDiscogsApiService, private toastr: ToastrService) { }
 
   onSearch(): void {
@@ -31,23 +35,24 @@ export class SearchComponent {
 
     this.optionsService.setStoredValues();
 
-    const getStores$ = zip(this.optionsService.getRadius(), this.optionsService.getLocation())
+    this.stores$ = zip(this.optionsService.getRadius(), this.optionsService.getLocation(), this.optionsService.getWantlistUsername())
       .pipe(
         finalize(() => this.searchBtnOptions.active = false),
         take(1),
         switchMap(
-          ([mapRadius, mapLocation]) => {
+          ([mapRadius, mapLocation, wantlistUsername]) => {
             if (!mapLocation) {
               this.toastr.warning('Please select a location on the map');
               return EMPTY;
+            } else if (!wantlistUsername) {
+              this.toastr.warning('Please enter a wantlist username');
+              return EMPTY;
             } else {
+              this.wantlistUsername = wantlistUsername;
               return this.apiService.getStoresByLocation(mapLocation.lat, mapLocation.lng, mapRadius);
             }
           }
         ));
-
-    // todo: get inventory for each seller.
-    getStores$.subscribe((stores: StoreResponse[]) => console.log(stores));
   }
 
 }

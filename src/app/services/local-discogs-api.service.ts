@@ -5,6 +5,8 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { retry, catchError } from 'rxjs/operators';
 import { StoreResponse } from '../models/storeResponse';
+import { SellerInventory } from '../models/sellerInventory';
+import { FilteredInventoryResponse } from '../models/filteredInventoryResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,22 @@ export class LocalDiscogsApiService {
     return this.http.get<StoreResponse[]>(
       environment.apiUrl + `store/by-location?lat=${lat}&lng=${lng}&radius=${radius}`)
       .pipe(
-        retry(1),
+        catchError(err => throwError(this.errorHandling(err)))
+      );
+  }
+
+  getInventory(sellername: string): Observable<SellerInventory> {
+    return this.http.get<SellerInventory>(
+      environment.apiUrl + `inventory/${sellername}`)
+      .pipe(
+        catchError(err => throwError(this.errorHandling(err)))
+      );
+  }
+
+  getFilteredInventory(sellername: string, wantlistUsername: string): Observable<FilteredInventoryResponse> {
+    return this.http.get<FilteredInventoryResponse>(
+      environment.apiUrl + `inventory/in-wantlist?sellername=${sellername}&wantlistUsername=${wantlistUsername}`)
+      .pipe(
         catchError(err => throwError(this.errorHandling(err)))
       );
   }
